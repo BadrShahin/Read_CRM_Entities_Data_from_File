@@ -1,0 +1,3382 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/21/2021 11:19:30 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="BADR-SHAHIN"
+  DTS:CreatorName="OTVENTURES\Badr.Shahin"
+  DTS:DTSID="{8570B07C-90D0-4BF9-B5ED-031E13AB15B1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="144"
+  DTS:VersionGUID="{35FEA5EE-4A74-4CE9-A7CB-780181F8C73A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3A6D4180-8B64-4B6E-9A75-B147C4167FC2}"
+      DTS:ObjectName="BADR-SHAHIN.CRM_DB.sa">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=BADR-SHAHIN;User ID=sa;Initial Catalog=CRM_DB;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA7hQZ3fs4PkuVqdmbD6VL9gAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABgpq4v6SBFfCJAt35aQAyBAAAAAASAAACgAAAAEAAAABiJry2NqnNu0AT006OuwzIgAAAAbvjZHNCr71YNqx/JxYripgkDG36ozlfUXEAXawT+ohAUAAAA8QqM/aCpiYjE4juqcWVoCNqZ11Q</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EntitiesConnection]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{C66A6C7A-F0F1-4D72-A213-B288FDFFDCDD}"
+      DTS:ObjectName="EntitiesConnection">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="D:\Projects\SSIS\ReadEntitiesDynamicFromFile\Entities and Attributes.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="EntityName"
+              DTS:DTSID="{02F556E4-6254-4695-8927-5FA781218544}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="EntityField"
+              DTS:DTSID="{DBF9D304-91F4-46E7-B1A8-F604E6F46B68}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="EntityFieldType"
+              DTS:DTSID="{2FA663C4-FD96-4667-ADE5-B741C1F1BE4F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F56D6B89-1927-49EE-B95B-618A56FAA183}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="orgURL">
+      <DTS:VariableValue
+        DTS:DataType="8">http://ldcrm365modonne.cloudapp.net/ModonR2QC/XRMServices/2011/Organization.svc</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3F04AB15-9B56-444B-85E0-D6601F87C105}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="password">
+      <DTS:VariableValue
+        DTS:DataType="8">linkP@ss</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B3D9A2B6-5097-47C9-ADD5-1E4CA6BCD882}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="userName">
+      <DTS:VariableValue
+        DTS:DataType="8">crm365dc\crmadmin</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Export CRM Data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{124D4D9B-60DD-4256-B29A-3C4C68E0E04B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Export CRM Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Export CRM Data\Check whether the contract submission exists or not"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Check whether the contract submission exists or not"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [Contract Submission]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [Contract Submission]) [refTable]
+where [refTable].[RequestNumber] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="RequestNumber" dataType="DT_STR" length="1500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Contract" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CreatedOn" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IndustrialCity" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="InvestmentAmount" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IsPaymentDone" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IsSubmitted" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductMainFamily" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RejectionReason" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RequestStatus" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TotalManpower" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TotalRequestedArea" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestNumber]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export CRM Data\Check whether the contract submission exists or not.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  connectionManagerRefId="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input].Columns[RequestNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1500"
+                      cachedName="RequestNumber"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestNumber]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">RequestNumber</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Match Output].Columns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Match Output].Columns[RequestNumber]"
+                      name="RequestNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">RequestNumber</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export CRM Data\Check whether the edit contract request exists or not"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Check whether the edit contract request exists or not"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[EditContractRequest]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[EditContractRequest]) [refTable]
+where [refTable].[ContractNumber] = ? and [refTable].[CR] = ? and [refTable].[IndustrialCity] = ? and [refTable].[RequestStatus] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="RequestNumber" dataType="DT_STR" length="1500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="ContractNumber" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CR" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IndustrialCity" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RequestStatus" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RequestType" dataType="DT_WSTR" length="1500" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[ContractNumber]};#{Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[CR]};#{Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[IndustrialCity]};#{Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestStatus]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  connectionManagerRefId="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input].Columns[ContractNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="ContractNumber"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[ContractNumber]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">ContractNumber</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input].Columns[CR]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="CR"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[CR]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">CR</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input].Columns[IndustrialCity]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="IndustrialCity"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[IndustrialCity]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">IndustrialCity</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input].Columns[RequestStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RequestStatus"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestStatus]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">RequestStatus</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestNumber]"
+                      name="RequestNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">RequestNumber</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[ContractNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[ContractNumber]"
+                      name="ContractNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ContractNumber</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[CR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[CR]"
+                      name="CR"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CR</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[IndustrialCity]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[IndustrialCity]"
+                      name="IndustrialCity"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">IndustrialCity</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestStatus]"
+                      name="RequestStatus"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">RequestStatus</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Match Output].Columns[RequestType]"
+                      name="RequestType"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">RequestType</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export CRM Data\Contract Submission Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Contract Submission Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Contract Submission]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export CRM Data\Contract Submission Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  connectionManagerRefId="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[RequestNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1500"
+                      cachedName="RequestNumber"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestNumber]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestNumber]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[Contract]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="Contract"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[Contract]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[Contract]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[CreatedOn]"
+                      cachedDataType="date"
+                      cachedName="CreatedOn"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[CreatedOn]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[CreatedOn]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[IndustrialCity]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="IndustrialCity"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IndustrialCity]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IndustrialCity]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[InvestmentAmount]"
+                      cachedDataType="cy"
+                      cachedName="InvestmentAmount"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[InvestmentAmount]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[InvestmentAmount]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[IsPaymentDone]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="IsPaymentDone"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IsPaymentDone]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsPaymentDone]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[IsSubmitted]"
+                      cachedDataType="bool"
+                      cachedName="IsSubmitted"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IsSubmitted]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsSubmitted]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[ProductMainFamily]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="ProductMainFamily"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[ProductMainFamily]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[ProductMainFamily]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[RejectionReason]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RejectionReason"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RejectionReason]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RejectionReason]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[RequestStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RequestStatus"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestStatus]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestStatus]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[TotalManpower]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="TotalManpower"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[TotalManpower]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalManpower]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].Columns[TotalRequestedArea]"
+                      cachedDataType="i4"
+                      cachedName="TotalRequestedArea"
+                      externalMetadataColumnId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[TotalRequestedArea]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalRequestedArea]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      name="RequestNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[Contract]"
+                      dataType="wstr"
+                      length="1500"
+                      name="Contract" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[CreatedOn]"
+                      dataType="dbTimeStamp"
+                      name="CreatedOn" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IndustrialCity]"
+                      dataType="wstr"
+                      length="1500"
+                      name="IndustrialCity" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[InvestmentAmount]"
+                      dataType="cy"
+                      name="InvestmentAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IsPaymentDone]"
+                      dataType="wstr"
+                      length="1500"
+                      name="IsPaymentDone" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[IsSubmitted]"
+                      dataType="bool"
+                      name="IsSubmitted" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[ProductMainFamily]"
+                      dataType="wstr"
+                      length="1500"
+                      name="ProductMainFamily" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RejectionReason]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RejectionReason" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestStatus]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RequestStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[TotalManpower]"
+                      dataType="wstr"
+                      length="1500"
+                      name="TotalManpower" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input].ExternalColumns[TotalRequestedArea]"
+                      dataType="i4"
+                      name="TotalRequestedArea" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export CRM Data\Contract Submission Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Contract Submission Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Contract Submission Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Contract Submission Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export CRM Data\Edit Contract Request Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Edit Contract Request Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[EditContractRequest]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export CRM Data\Edit Contract Request Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  connectionManagerRefId="Package.ConnectionManagers[BADR-SHAHIN.CRM_DB.sa]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[RequestNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1500"
+                      cachedName="RequestNumber"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestNumber]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestNumber]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[ContractNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="ContractNumber"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[ContractNumber]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[ContractNumber]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[CR]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="CR"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[CR]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[CR]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[IndustrialCity]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="IndustrialCity"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[IndustrialCity]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[IndustrialCity]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[RequestStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RequestStatus"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestStatus]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestStatus]" />
+                    <inputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].Columns[RequestType]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RequestType"
+                      externalMetadataColumnId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestType]"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestType]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      name="RequestNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[ContractNumber]"
+                      dataType="wstr"
+                      length="1500"
+                      name="ContractNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[CR]"
+                      dataType="wstr"
+                      length="1500"
+                      name="CR" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[IndustrialCity]"
+                      dataType="wstr"
+                      length="1500"
+                      name="IndustrialCity" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestStatus]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RequestStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input].ExternalColumns[RequestType]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RequestType" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export CRM Data\Edit Contract Request Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Edit Contract Request Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Edit Contract Request Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Edit Contract Request Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export CRM Data\Get Data from CRM"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;12"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="Get Data from CRM"
+              version="12">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="33">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_8892b78662054fc0b9e8c086083c50ca")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_8892b78662054fc0b9e8c086083c50ca")]
+[assembly: AssemblyCopyright("Copyright @  2021")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.0.0")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+
+using System.Net;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Client;
+using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
+using System.ServiceModel.Description;
+using System.Collections.Generic;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    private StreamReader SR;
+    private string EntitiesFileConnection;
+
+    private List<string> EntitiesNameList;
+    private List<string> EntityAttributesList;
+
+
+    IOrganizationService organizationService = null;
+
+
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+
+    public override void AcquireConnections(object Transaction)
+    {
+        // Get the EntitiesFileConn connection, store it as 'EntitiesFileConnection'
+        IDTSConnectionManager100 CM = this.Connections.EntitiesFileConn;
+        EntitiesFileConnection = (string)CM.AcquireConnection(null);
+    }
+    
+    public override void PreExecute()
+    {
+        base.PreExecute();
+
+        // Create a reader for EntitiesFileConnection
+        SR = new StreamReader(EntitiesFileConnection);
+
+        ConnectCRMUsingOrgSer();
+    }
+    
+    public override void PostExecute()
+    {
+        base.PostExecute();
+
+        // Close the reader
+        SR.Close();
+    }
+
+    public override void CreateNewOutputRows()
+    {
+        // Declare variables
+        string nextLine;
+        string[] columns;
+        char[] delimiters;
+
+        // Set the delimiter
+        delimiters = ",".ToCharArray();
+
+        // Read the first line (header)
+        nextLine = SR.ReadLine();
+
+        // Split the line into columns
+        columns = nextLine.Split(delimiters);
+
+        // Read the second line and loop until the end of the file
+        nextLine = SR.ReadLine();
+
+        EntitiesNameList = new List<string>();
+        EntityAttributesList = new List<string>();
+
+        while (nextLine != null)
+        {
+            // Split the line into columns
+            columns = nextLine.Split(delimiters);
+
+            if (columns[0] != null && columns[0] != "")
+            {
+                if (!EntitiesNameList.Contains(columns[0]))
+                {
+                    EntitiesNameList.Add(columns[0].ToString());
+
+                    if (EntityAttributesList.Count != 0)
+                    {
+                        string entity = GetPreviousEntity(EntitiesNameList, EntitiesNameList.Last());
+
+                        RetriveEntityData(organizationService, entity, EntityAttributesList);
+                    }
+
+                    // clear entity attrribute list
+                    EntityAttributesList.Clear();
+                }
+
+                if (columns[1] != null && columns[1] != "")
+                {
+                    if (!EntityAttributesList.Contains(columns[1]))
+                    {
+                        EntityAttributesList.Add(columns[1].ToString());
+                    }
+                }
+
+            }
+            
+            // Read the next line
+            nextLine = SR.ReadLine();
+        }
+
+        // Get the last entity in the EntitiesName list 
+        if (EntityAttributesList.Count != 0)
+        {
+            RetriveEntityData(organizationService, EntitiesNameList.Last(), EntityAttributesList);
+
+            // clear entity attrribute list
+            EntityAttributesList.Clear();
+        }
+
+    }
+
+    // Get previous entity name from EntitiesName list 
+    private static T GetPreviousEntity<T>(IEnumerable<T> list, T current)
+    {
+        try
+        {
+            return list.TakeWhile(x => !x.Equals(current)).Last();
+        }
+        catch
+        {
+            return default(T);
+        }
+    }
+
+    // Establish CRM connection
+    public IOrganizationService ConnectCRMUsingOrgSer()
+    {
+        string url = Variables.orgURL;
+        try
+        {
+            ClientCredentials clientCredentials = new ClientCredentials();
+            clientCredentials.UserName.UserName = Variables.userName;
+            clientCredentials.UserName.Password = Variables.password;
+
+            // For Dynamics 365 Customer Engagement V9.X, set Security Protocol as TLS12
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            organizationService = (IOrganizationService)new OrganizationServiceProxy(new Uri(url), null, clientCredentials, null);
+
+            if (organizationService != null)
+            {
+                // Get Logged in user id 
+                Guid userid = ((WhoAmIResponse)organizationService.Execute(new WhoAmIRequest())).UserId;
+
+                if (userid != Guid.Empty)
+                {
+                    MessageBox.Show("Connection Established Successfully...");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to Established Connection!!!");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Exception caught - " + ex.Message);
+        }
+        return organizationService;
+    }
+
+
+    // Retrive Entity Data 
+    public void RetriveEntityData(IOrganizationService service, string entityName, List<string> entityAttributes)
+    {
+        QueryExpression query = new QueryExpression(entityName);
+        
+        if (entityName == "ldv_editcontract")
+        {
+            foreach (var attribute in entityAttributes)
+            {
+                query.ColumnSet.AddColumns(attribute);
+            }
+
+            EntityCollection entityCollection = service.RetrieveMultiple(query);
+
+            foreach (var entity in entityCollection.Entities)
+            {
+                EditContractRequestBuffer.AddRow();
+
+                if (entity.Attributes.Contains("ldv_name")) 
+                    EditContractRequestBuffer.RequestNumber = entity.GetAttributeValue<string>("ldv_name");
+
+                if (entity.Attributes.Contains("ldv_contractnumber"))
+                    EditContractRequestBuffer.ContractNumber = entity.GetAttributeValue<EntityReference>("ldv_contractnumber").Name;
+
+                if (entity.Attributes.Contains("ldv_cr"))
+                    EditContractRequestBuffer.CR = entity.GetAttributeValue<EntityReference>("ldv_cr").Name;
+
+                if (entity.Attributes.Contains("ldv_industrialcity"))
+                    EditContractRequestBuffer.IndustrialCity = entity.GetAttributeValue<EntityReference>("ldv_industrialcity").Name;
+
+                if (entity.Attributes.Contains("ldv_requeststatus"))
+                    EditContractRequestBuffer.RequestStatus = entity.GetAttributeValue<EntityReference>("ldv_requeststatus").Name;
+
+                if (entity.Attributes.Contains("ldv_requesttype"))
+                    EditContractRequestBuffer.RequestType = entity.FormattedValues["ldv_requesttype"].ToString();
+
+            }
+        }
+        else if (entityName == "ldv_contractsubmission")
+        {
+            foreach (var attribute in entityAttributes)
+            {
+                query.ColumnSet.AddColumns(attribute);
+            }
+
+            EntityCollection entityCollection = service.RetrieveMultiple(query);
+
+            foreach (var entity in entityCollection.Entities)
+            {
+                ContractSubmissionBuffer.AddRow();
+
+                if (entity.Attributes.Contains("ldv_name"))
+                    ContractSubmissionBuffer.RequestNumber = entity.GetAttributeValue<string>("ldv_name");
+
+                if (entity.Attributes.Contains("createdon"))
+                    ContractSubmissionBuffer.CreatedOn = (DateTime)entity.Attributes["createdon"];
+
+                if (entity.Attributes.Contains("ldv_contract"))
+                    ContractSubmissionBuffer.Contract = entity.GetAttributeValue<EntityReference>("ldv_contract").Name;
+
+                if (entity.Attributes.Contains("ldv_requeststatus"))
+                    ContractSubmissionBuffer.RequestStatus = entity.GetAttributeValue<EntityReference>("ldv_requeststatus").Name;
+
+                if (entity.Attributes.Contains("ldv_industrialcity"))
+                    ContractSubmissionBuffer.IndustrialCity = entity.GetAttributeValue<EntityReference>("ldv_industrialcity").Name;
+
+                if (entity.Attributes.Contains("ldv_productmainfamily"))
+                    ContractSubmissionBuffer.ProductMainFamily = entity.GetAttributeValue<EntityReference>("ldv_productmainfamily").Name;
+
+                if (entity.Attributes.Contains("ldv_rejectionreasonid"))
+                    ContractSubmissionBuffer.RejectionReason = entity.GetAttributeValue<EntityReference>("ldv_rejectionreasonid").Name;
+
+                if (entity.Attributes.Contains("ldv_totalmanpower"))
+                    ContractSubmissionBuffer.TotalManpower = entity.GetAttributeValue<string>("ldv_totalmanpower");
+
+                if (entity.Attributes.Contains("ldv_ispaymentdone"))
+                    ContractSubmissionBuffer.IsPaymentDone = entity.GetAttributeValue<OptionSetValue>("ldv_ispaymentdone").Value.ToString();
+
+                if (entity.Attributes.Contains("ldv_issubmitted"))
+                    ContractSubmissionBuffer.IsSubmitted = entity.GetAttributeValue<Boolean>("ldv_issubmitted");
+
+                if (entity.Attributes.Contains("ldv_totalrequestedarea"))
+                    ContractSubmissionBuffer.TotalRequestedArea = entity.GetAttributeValue<int>("ldv_totalrequestedarea");
+
+                if (entity.Attributes.Contains("ldv_investmentamount"))
+                    ContractSubmissionBuffer.InvestmentAmount = Convert.ToDecimal(entity.GetAttributeValue<Money>("ldv_investmentamount").Value);
+
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class ContractBuffer: ScriptBuffer
+
+{
+    public ContractBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String title
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool title_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public DateTime createdon
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool createdon_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public DateTime modifiedon
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool modifiedon_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class EditContractRequestBuffer: ScriptBuffer
+
+{
+    public EditContractRequestBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String RequestNumber
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool RequestNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ContractNumber
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool ContractNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String CR
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool CR_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IndustrialCity
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool IndustrialCity_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RequestStatus
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool RequestStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RequestType
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool RequestType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class ContractSubmissionBuffer: ScriptBuffer
+
+{
+    public ContractSubmissionBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String RequestNumber
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool RequestNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Contract
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool Contract_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public DateTime CreatedOn
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool CreatedOn_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IndustrialCity
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool IndustrialCity_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public Decimal InvestmentAmount
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool InvestmentAmount_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IsPaymentDone
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool IsPaymentDone_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public Boolean IsSubmitted
+    {
+        set
+        {
+            this[6] = value;
+        }
+    }
+    public bool IsSubmitted_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(6);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ProductMainFamily
+    {
+        set
+        {
+            this[7] = value;
+        }
+    }
+    public bool ProductMainFamily_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(7);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RejectionReason
+    {
+        set
+        {
+            this[8] = value;
+        }
+    }
+    public bool RejectionReason_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(8);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RequestStatus
+    {
+        set
+        {
+            this[9] = value;
+        }
+    }
+    public bool RequestStatus_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(9);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TotalManpower
+    {
+        set
+        {
+            this[10] = value;
+        }
+    }
+    public bool TotalManpower_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(10);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public Int32 TotalRequestedArea
+    {
+        set
+        {
+            this[11] = value;
+        }
+    }
+    public bool TotalRequestedArea_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(11);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class HeadersBuffer: ScriptBuffer
+
+{
+    public HeadersBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String EntityFieldType
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool EntityFieldType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EntityField
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool EntityField_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EntityName
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool EntityName_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public ContractBuffer ContractBuffer;
+
+    public EditContractRequestBuffer EditContractRequestBuffer;
+
+    public ContractSubmissionBuffer ContractSubmissionBuffer;
+
+    public HeadersBuffer HeadersBuffer;
+
+    public virtual void FinishOutputs()
+    {
+    }
+
+    private void MarkOutputsFinished()
+    {
+
+        if (null != ContractBuffer)
+        {
+            ContractBuffer.SetEndOfRowset();
+            ContractBuffer = null;
+        }
+
+        if (null != EditContractRequestBuffer)
+        {
+            EditContractRequestBuffer.SetEndOfRowset();
+            EditContractRequestBuffer = null;
+        }
+
+        if (null != ContractSubmissionBuffer)
+        {
+            ContractSubmissionBuffer.SetEndOfRowset();
+            ContractSubmissionBuffer = null;
+        }
+
+        if (null != HeadersBuffer)
+        {
+            HeadersBuffer.SetEndOfRowset();
+            HeadersBuffer = null;
+        }
+
+    }
+
+    public override void PrimeOutput(int Outputs, int[] OutputIDs, PipelineBuffer[] Buffers, OutputNameMap OutputMap)
+    {
+       for(int Idx = 0; Idx < Outputs; Idx++)
+       {
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"Contract"))
+            {
+                ContractBuffer = new ContractBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"EditContractRequest"))
+            {
+                EditContractRequestBuffer = new EditContractRequestBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"ContractSubmission"))
+            {
+                ContractSubmissionBuffer = new ContractSubmissionBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"Headers"))
+            {
+                HeadersBuffer = new HeadersBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+        }
+
+        CreateNewOutputRows();
+
+        FinishOutputs();
+        MarkOutputsFinished();
+
+    }
+
+    public virtual void CreateNewOutputRows()
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+    public IDTSConnectionManager100 EntitiesFileConn
+    {
+        get
+        {
+            return ParentComponent.ComponentMetaData.RuntimeConnectionCollection.GetRuntimeConnectionByName(@"Entities_File_Conn").ConnectionManager;
+        }
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+    public String orgURL
+    {
+        get
+        {
+            return (String)(ParentComponent.ReadOnlyVariables["orgURL"].GetValueWithContext(ScriptComponent.EvaluatorContext));
+        }
+    }
+
+    public String password
+    {
+        get
+        {
+            return (String)(ParentComponent.ReadOnlyVariables["password"].GetValueWithContext(ScriptComponent.EvaluatorContext));
+        }
+    }
+
+    public String userName
+    {
+        get
+        {
+            return (String)(ParentComponent.ReadOnlyVariables["userName"].GetValueWithContext(ScriptComponent.EvaluatorContext));
+        }
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_8892b78662054fc0b9e8c086083c50ca.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A70947EE-752A-419F-BDF7-77096BEDC1D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_8892b78662054fc0b9e8c086083c50ca</RootNamespace>
+    <AssemblyName>SC_8892b78662054fc0b9e8c086083c50ca</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Badr.Shahin\AppData\Local\Temp\Vsta\SSIS_SC150\VstaEId1XlhRK0SqSuAoXVt7WQ\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.33\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Users\Badr.Shahin\AppData\Local\Temp\Vsta\SSIS_SC150\VstaEId1XlhRK0SqSuAoXVt7WQ\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.33\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" />
+        <Host Name="ScriptComponent" IconIndex="0" />
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC150</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_8892b78662054fc0b9e8c086083c50ca</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_8892b78662054fc0b9e8c086083c50ca</msb:DisplayName>
+    <msb:ProjectId>{A74EB9A3-C7C9-44CC-8B8A-6E2A1AE9D64D}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_8892b78662054fc0b9e8c086083c50ca.csproj" />
+    <msb:File Include="packages.config" />
+    <msb:File Include="main.cs" />
+    <msb:File Include="BufferWrapper.cs" />
+    <msb:File Include="ComponentWrapper.cs" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_8892b78662054fc0b9e8c086083c50ca.Properties.Settings.get_Default():SC_8892b78662054fc0b9e8c086083c50ca.Properties.Sett" +
+    "ings")]
+
+namespace SC_8892b78662054fc0b9e8c086083c50ca.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_8892b78662054fc0b9e8c086083c50ca.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_8892b78662054fc0b9e8c086083c50ca.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_8892b78662054fc0b9e8c086083c50ca.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_8892b78662054fc0b9e8c086083c50ca.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_8892b78662054fc0b9e8c086083c50ca.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[packages.config]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Microsoft.CrmSdk.CoreAssemblies" version="9.0.2.33" targetFramework="net47" />
+</packages>]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_8892b78662054fc0b9e8c086083c50ca.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[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
+ASoeAihWAAAKKq5+DgAABC0ecnAEAHDQCgAAAihfAAAKb2AAAApzYQAACoAOAAAEfg4AAAQqGn4P
+AAAEKh4CgA8AAAQqGn4QAAAEKh4CKGIAAAoqLnNZAAAGgBAAAAQqcg8BAntjAAAKjAsAABv+FgsA
+ABtvZAAAChb+ASoAAABCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwAAAD8EAAAI34A
+AGgRAADQEQAAI1N0cmluZ3MAAAAAOCMAAOQEAAAjVVMAHCgAABAAAAAjR1VJRAAAACwoAADgAwAA
+I0Jsb2IAAAAAAAAAAgAAAVcVogkJDwAAAPoBMwAWAAABAAAAUQAAAAwAAAARAAAAXAAAAEoAAABk
+AAAAEQAAAAYAAAAIAAAANwAAADgAAAALAAAAAQAAAAsAAAABAAAAAQAAAAIAAAAKAAAAAAAYBwEA
+AAAAAAYAcQUWDQYABQYWDQYAvQQDDQ8Aig0AAAYA6gQOCgYAVAUOCgYANQUOCgYA7AUOCgYAkQUO
+CgYAqgUOCgYAAQUOCgYAHAVrBgoAxQV8AwYArQtJAQYABAHLAQ4ASAKSBgYAIA9iCRIAZgBvDAYA
+1wDLARYAaA7BCgYAtwpiCQ4AyAklET8A4QwAAAYA9gDLAQ4AkhGSBgYAhQQWDQoACgx8AxoAxQt8
+AwoAAQt8AwYAagNiCQYAxwZiCQoApQ98AwYAoAQDDQYANQw2DQYA9QrtCR4AcAQCBx4A0QQCBx4A
+HATYCQYAhwZiCQYAugtJASIApQJgCwYAEQFiCRYApAZqER4AWwwnDx4AwwMnDx4AjgZiCQ4AtxFu
+DyYAEhCZDQ4ATQSSBg4AIBCSBiYAPgSZDQYAGQJiCSoA5RCBDioAYQ+BDg4ANg8lEQYAsAJiCQ4A
+bQqSBg4ANAQlEQ4A5QCSBgYA6QDjBg4AIAqSBg4AGAGSBg4AiQKSBg4ANAqSBgYA0gyqDg4AVgaS
+BgYACwFiCQ4A/BCSBgYABRBiCQYApwpiCQYAgwliCS4AAQCXDC4AKgCXDC4ATQCXDBIAfwBvDBIA
+GgBvDIMAqRAAABIAkABvDAYA4wNiCQYAvAJiCQYABhEOCgAAAAApAQAAAAABAAEAAQAQAIsJAAAc
+AAEAAQABABAA+wsAAG0ABgAJAAEAEAAXDAAAbQAGABMAAQAQANQLAABtAAYAIwABABAA7QsAAG0A
+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
+KgwAAAIAOg4AAAMADwsAAAEAZQYAAAEAZQYAAAEAZQYAAAEAZQYAAAEAZQYAAAEAZQYAAAEA3g4A
+AAIA+QwAAAMA0A4AAAQADwsAAAEAqw8AAAEAqw8AAAEAZQYAAAEA7hAJAOwMAQARAOwMBgAZAOwM
+CgApAOwMEAAxAOwMEAA5AOwMEABBAOwMEABJAOwMEABRAOwMEABZAOwMEABhAOwMEABpAOwMBgDR
+AOwMBgAJAewMBgApAewMFQCRAJUKIQABASMGBgBxAOwMEAABAS4GBgBBAWIEBgA5AfAQLwBBAXMD
+NAA5AU8POAAMAOwMBgA5AVwRRQAMAJYOSwCJAIUGNAAMAPEBUQAMAMkPVwBJAQ0QWwAMAGwLBgAU
+AOwMBgAUAMEPfwAUAKgASwAcAOwMjABJAeACkgChAOwMBgChAA4DugBZARsDEABZAS4CEABhATsJ
+wABxAewMEAB5AewMxwCBAewMBgCBADIG1QCZAeYB3gChAZkR5AChAVwR6QCpAeAQ8wCpAJkCNAA5
+AQwP+gCxAOwMEAA5AVARRQAMAN4MFwEsALUPJgGxADIPKwG5AZ8OMQEsAIwQNwHBAWgEBgCBAOoC
+OwHJAbQNRAE0AN4MVgE8ALUPJgHJAAYOZgFEAJYOSwDJAEQGdAH5AQUDNADJACYOgQFMAFAJjwEJ
+AowQNwFEAFAJjwERAjoGVwAZAoUGNAAhAjoGqgEpAsUGrwHZAOwMtgHZAFkJwAHZADMJAQAxAuwM
+EADZANkQBgDZAEAPBgDZAEMPNwEBAewMBgABATIBygEBAU4O0QGJAOwMBgABAZoB1wFBAk0K3QFJ
+AjUD4wFRAkUM6gEBAfAN7wFZAlAJ9QEBAcQQ/AFhApUQAgJ5As4CCQJ5AgIREgIRAewMGAIxAewM
+BgBUAMEPfwCJAHoOKgIuAAsAFwMuABMAIAMuABsAPwMuACMASAMuACsAcQMuADMAcQMuADsAcQMu
+AEMASAMuAEsAdwMuAFMAcQMuAFsAjgNDAGMA2ANDAXMA2AODAWsA2AMBAmsA2AOpBnsAPwPJBnsA
+PwMcACYAawCyAAABxgEDAAEABAAHAAUAEwAGACsACAAxAAkAMgAKADUACwA3AAAA/wLrAgAAngfv
+AgAAvgnzAgAAOwjvAgAArwnzAgAAJQjvAgAAnwvrAgAAhQjvAgAAjAvrAgAAawjvAgAAVwHrAgAA
+RAfvAgAAQRHrAgAAHQnvAgAA6g7rAgAAtwjvAgAA3APrAgAA+QfvAgAAnwvrAgAAhQjvAgAAFw/r
+AgAA0AjvAgAAbQnzAgAAEAjvAgAAQRHrAgAAHQnvAgAA1w/4AgAA5AjvAgAAoQPrAgAAxQfvAgAA
+DQLvAgAAcAfvAgAAExHrAgAAAAnvAgAA5QrrAgAAUAjvAgAA6g7rAgAAtwjvAgAAxAzrAgAAngjv
+AgAAhwH9AgAAUgfvAgAAswPrAgAA3gfvAgAAIgLrAgAAhwfvAgAAVAPrAgAArwfvAgAAmgkBAwAA
+QgHrAgAAPwLrAgAALAPrAgAANQwGAwAAFAQMAwAAWQ8SAwEACgADAAEACwAFAAEADAAHAAEADQAJ
+AAEADgALAAEADwANAAEAFAAPAAEAFQARAAEAFgATAAEAFwAVAAEAGAAXAAEAGQAZAAEAGgAbAAEA
+GwAdAAEAHAAfAAEAHQAhAAEAHgAjAAEAHwAlAAEAJAAnAAEAJQApAAEAJgArAAEAJwAtAAEAKAAv
+AAEAKQAxAAEAKgAzAAEAKwA1AAEALAA3AAEALQA5AAEALgA7AAEALwA9AAEAMAA/AAEAMQBBAAEA
+MgBDAAEAMwBFAAEANABHAAEANQBJAAEANgBLAAEANwBNAAEAOABPAAEAOQBRAAEAOgBTAAEAOwBV
+AAEAQABXAAEAQQBZAAEAQgBbAAEAQwBdAAEARABfAAEARQBhAAIATwBjAAIAUQBlAAIAUgBnAAIA
+UwBpAAIAVQBrAAIAVgBtAAEAVwBtAAIAWABvAD8AeACDAK8AIAFOAV8BbAGHASACJwIEgAAAAQAA
+AAAAAAAAAAAAAABfAQAABAAAAAAAAAAAAAAALwLCAQAAAAAPAAAAAAAAAAAAAAA4AugPAAAAAAkA
+AAAAAAAAAAAAAEECkgYAAAAADwAAAAAAAAAAAAAAOAIZCwAAAAAEAAAAAAAAAAAAAAAvAs8GAAAA
+AA8AAAAAAAAAAAAAADgCXxAAAAAABAAAAAAAAAAAAAAALwJiCQAAAAAEAAAAAAAAAAAAAAAvAugD
+AAAAAAkAAAAAAAAAAAAAAEECnxEAAAAABAAAAAAAAAAAAAAALwKBDgAAAAAPAAAAAAAAAAAAAAA4
+AjwLAAAAAAAAAAABAAAARw0AAAwAAgAAAAAACwBdAQAAAAAYAF0BPQBnAAoAZwBJAKoAPQCqAIUA
+ZwCFAHsBhQCWAYUAnAGFAKABhQCkAQAAAElEVFNDb21wb25lbnRNZXRhRGF0YTEwMABJRFRTVmFy
+aWFibGUxMDAASURUU1J1bnRpbWVDb25uZWN0aW9uQ29sbGVjdGlvbjEwMABJRFRTUnVudGltZUNv
+bm5lY3Rpb24xMDAASURUU0Nvbm5lY3Rpb25NYW5hZ2VyMTAwAElEVFNWYXJpYWJsZXMxMDAASURU
+U0V2YWx1YXRvckNvbnRleHQxMDAAPEdldFByZXZpb3VzRW50aXR5PmJfXzAAPD5jX19EaXNwbGF5
+Q2xhc3M5XzBgMQBJRW51bWVyYWJsZWAxAERhdGFDb2xsZWN0aW9uYDEASUVudW1lcmF0b3JgMQBM
+aXN0YDEASW50MzIARnVuY2AyAERhdGFDb2xsZWN0aW9uYDIAPE1vZHVsZT4AR2V0T3V0cHV0SUQA
+Z2V0X29yZ1VSTABTeXN0ZW0uSU8Ac2V0X0NSAFNSAFQAU0NfODg5MmI3ODY2MjA1NGZjMGI5ZThj
+MDg2MDgzYzUwY2EAc2V0X1RvdGFsUmVxdWVzdGVkQXJlYQBnZXRfQ29tcG9uZW50TWV0YURhdGEA
+UmV0cml2ZUVudGl0eURhdGEAbXNjb3JsaWIAU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMAZ2V0
+X1VzZXJJZABBZGQATWFya091dHB1dHNGaW5pc2hlZABzZXRfSXNTdWJtaXR0ZWQAR3VpZABzZXRf
+RW50aXR5RmllbGQAc2V0X1Bhc3N3b3JkAGdldF9wYXNzd29yZABJT3JnYW5pemF0aW9uU2Vydmlj
+ZQBvcmdhbml6YXRpb25TZXJ2aWNlAHNlcnZpY2UAZGVmYXVsdEluc3RhbmNlAEVudGl0eVJlZmVy
+ZW5jZQBnZXRfTWVzc2FnZQBFbnVtZXJhYmxlAElEaXNwb3NhYmxlAFJ1bnRpbWVUeXBlSGFuZGxl
+AEdldFR5cGVGcm9tSGFuZGxlAFRha2VXaGlsZQBSZXRyaWV2ZU11bHRpcGxlAHNldF90aXRsZQBn
+ZXRfTmFtZQBnZXRfVXNlck5hbWUAc2V0X1VzZXJOYW1lAGdldF91c2VyTmFtZQBHZXRSdW50aW1l
+Q29ubmVjdGlvbkJ5TmFtZQBzZXRfRW50aXR5TmFtZQBlbnRpdHlOYW1lAERhdGVUaW1lAFJlYWRM
+aW5lAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlBpcGVsaW5lAHNldF9Jc1BheW1lbnREb25lAHNl
+dF9FbnRpdHlGaWVsZFR5cGUAU2VjdXJpdHlQcm90b2NvbFR5cGUAc2V0X1JlcXVlc3RUeXBlAFN5
+c3RlbS5Db3JlAGdldF9DdWx0dXJlAHNldF9DdWx0dXJlAHJlc291cmNlQ3VsdHVyZQBBcHBsaWNh
+dGlvblNldHRpbmdzQmFzZQBRdWVyeUJhc2UAV2hvQW1JUmVzcG9uc2UAT3JnYW5pemF0aW9uUmVz
+cG9uc2UAQ2xvc2UARGlzcG9zZQBFZGl0b3JCcm93c2FibGVTdGF0ZQBDb21waWxlckdlbmVyYXRl
+ZEF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAERlYnVnZ2FibGVBdHRyaWJ1
+dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRlAEFzc2VtYmx5VGl0bGVBdHRyaWJ1dGUAQXNzZW1i
+bHlUcmFkZW1hcmtBdHRyaWJ1dGUAVGFyZ2V0RnJhbWV3b3JrQXR0cmlidXRlAEFzc2VtYmx5Q29u
+ZmlndXJhdGlvbkF0dHJpYnV0ZQBBc3NlbWJseURlc2NyaXB0aW9uQXR0cmlidXRlAENvbXBpbGF0
+aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFzc2VtYmx5
+Q29weXJpZ2h0QXR0cmlidXRlAFNTSVNTY3JpcHRDb21wb25lbnRFbnRyeVBvaW50QXR0cmlidXRl
+AEFzc2VtYmx5Q29tcGFueUF0dHJpYnV0ZQBSdW50aW1lQ29tcGF0aWJpbGl0eUF0dHJpYnV0ZQBQ
+cmVFeGVjdXRlAFBvc3RFeGVjdXRlAGdldF9WYWx1ZQBHZXRBdHRyaWJ1dGVWYWx1ZQBPcHRpb25T
+ZXRWYWx1ZQB2YWx1ZQBTeXN0ZW0uUnVudGltZS5WZXJzaW9uaW5nAFRvU3RyaW5nAFVyaQBNaWNy
+b3NvZnQuWHJtLlNkawBVc2VyTmFtZVBhc3N3b3JkQ2xpZW50Q3JlZGVudGlhbABUb0RlY2ltYWwA
+U3lzdGVtLlNlcnZpY2VNb2RlbABTeXN0ZW0uQ29sbGVjdGlvbnMuT2JqZWN0TW9kZWwAU3lzdGVt
+LkNvbXBvbmVudE1vZGVsAFNDXzg4OTJiNzg2NjIwNTRmYzBiOWU4YzA4NjA4M2M1MGNhLmRsbABz
+ZXRfQ1JfSXNOdWxsAHNldF9Ub3RhbFJlcXVlc3RlZEFyZWFfSXNOdWxsAHNldF9Jc1N1Ym1pdHRl
+ZF9Jc051bGwAc2V0X0VudGl0eUZpZWxkX0lzTnVsbABzZXRfdGl0bGVfSXNOdWxsAHNldF9FbnRp
+dHlOYW1lX0lzTnVsbABzZXRfSXNQYXltZW50RG9uZV9Jc051bGwAc2V0X0VudGl0eUZpZWxkVHlw
+ZV9Jc051bGwAc2V0X1JlcXVlc3RUeXBlX0lzTnVsbABzZXRfQ3JlYXRlZE9uX0lzTnVsbABzZXRf
+bW9kaWZpZWRvbl9Jc051bGwAc2V0X2NyZWF0ZWRvbl9Jc051bGwAc2V0X1JlamVjdGlvblJlYXNv
+bl9Jc051bGwAc2V0X0NvbnRyYWN0TnVtYmVyX0lzTnVsbABzZXRfUmVxdWVzdE51bWJlcl9Jc051
+bGwAc2V0X1RvdGFsTWFucG93ZXJfSXNOdWxsAHNldF9SZXF1ZXN0U3RhdHVzX0lzTnVsbABzZXRf
+Q29udHJhY3RfSXNOdWxsAHNldF9JbnZlc3RtZW50QW1vdW50X0lzTnVsbABzZXRfUHJvZHVjdE1h
+aW5GYW1pbHlfSXNOdWxsAHNldF9JbmR1c3RyaWFsQ2l0eV9Jc051bGwAU2V0TnVsbABzZXRfU2Vj
+dXJpdHlQcm90b2NvbABnZXRfSXRlbQBzZXRfSXRlbQBTeXN0ZW0Ac2V0X0NyZWF0ZWRPbgByZXNv
+dXJjZU1hbgBCb29sZWFuAFNjcmlwdE1haW4AZ2V0X0VudGl0aWVzRmlsZUNvbm4Ac2V0X21vZGlm
+aWVkb24Ac2V0X2NyZWF0ZWRvbgBRdWVyeUV4cHJlc3Npb24AU3lzdGVtLkNvbmZpZ3VyYXRpb24A
+U3lzdGVtLkdsb2JhbGl6YXRpb24AVHJhbnNhY3Rpb24AU3lzdGVtLlJlZmxlY3Rpb24AQXR0cmli
+dXRlQ29sbGVjdGlvbgBGb3JtYXR0ZWRWYWx1ZUNvbGxlY3Rpb24AZ2V0X1J1bnRpbWVDb25uZWN0
+aW9uQ29sbGVjdGlvbgBFbnRpdHlDb2xsZWN0aW9uAEVudGl0aWVzRmlsZUNvbm5lY3Rpb24AQWNx
+dWlyZUNvbm5lY3Rpb24ASW52YWxpZE9wZXJhdGlvbkV4Y2VwdGlvbgBTeXN0ZW0uU2VydmljZU1v
+ZGVsLkRlc2NyaXB0aW9uAHNldF9SZWplY3Rpb25SZWFzb24AQ3VsdHVyZUluZm8AT3V0cHV0TmFt
+ZU1hcABPdXRwdXRNYXAATWljcm9zb2Z0LlNxbFNlcnZlci5EVFNSdW50aW1lV3JhcABNaWNyb3Nv
+ZnQuU3FsU2VydmVyLkRUU1BpcGVsaW5lV3JhcABTeXN0ZW0uTGlucQBDbGVhcgBDb25uZWN0Q1JN
+VXNpbmdPcmdTZXIAc2V0X0NvbnRyYWN0TnVtYmVyAHNldF9SZXF1ZXN0TnVtYmVyAFN0cmVhbVJl
+YWRlcgBUZXh0UmVhZGVyAFBpcGVsaW5lQnVmZmVyAENvbnRyYWN0U3VibWlzc2lvbkJ1ZmZlcgBI
+ZWFkZXJzQnVmZmVyAENvbnRyYWN0QnVmZmVyAFNjcmlwdEJ1ZmZlcgBFZGl0Q29udHJhY3RSZXF1
+ZXN0QnVmZmVyAGdldF9SZXNvdXJjZU1hbmFnZXIAZ2V0X0Nvbm5lY3Rpb25NYW5hZ2VyAFNlcnZp
+Y2VQb2ludE1hbmFnZXIATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUnVudGltZS5XcmFwcGVyAE1p
+Y3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlBpcGVsaW5lLldyYXBwZXIAc2V0X1RvdGFsTWFucG93ZXIA
+SUVudW1lcmF0b3IAR2V0RW51bWVyYXRvcgAuY3RvcgAuY2N0b3IAT3V0cHV0SURzAFN5c3RlbS5E
+aWFnbm9zdGljcwBTeXN0ZW0uUnVudGltZS5Db21waWxlclNlcnZpY2VzAFN5c3RlbS5SZXNvdXJj
+ZXMAU0NfODg5MmI3ODY2MjA1NGZjMGI5ZThjMDg2MDgzYzUwY2EuUHJvcGVydGllcy5SZXNvdXJj
+ZXMucmVzb3VyY2VzAERlYnVnZ2luZ01vZGVzAE1pY3Jvc29mdC5Dcm0uU2RrLk1lc3NhZ2VzAGdl
+dF9FbnRpdGllcwBTQ184ODkyYjc4NjYyMDU0ZmMwYjllOGMwODYwODNjNTBjYS5Qcm9wZXJ0aWVz
+AGdldF9SZWFkT25seVZhcmlhYmxlcwBnZXRfQXR0cmlidXRlcwBlbnRpdHlBdHRyaWJ1dGVzAGdl
+dF9Gb3JtYXR0ZWRWYWx1ZXMAQnVmZmVyQ29sdW1uSW5kZXhlcwBHZXRDb2x1bW5JbmRleGVzAFNl
+dHRpbmdzAENsaWVudENyZWRlbnRpYWxzAEVxdWFscwBTeXN0ZW0uV2luZG93cy5Gb3JtcwBDb250
+YWlucwBBZGRDb2x1bW5zAFN5c3RlbS5Db2xsZWN0aW9ucwBBY3F1aXJlQ29ubmVjdGlvbnMAQnVm
+ZmVycwBGaW5pc2hPdXRwdXRzAHNldF9SZXF1ZXN0U3RhdHVzAENyZWF0ZU5ld091dHB1dFJvd3MA
+Q29uY2F0AHNldF9Db250cmFjdABPYmplY3QAU3lzdGVtLk5ldABnZXRfQ29sdW1uU2V0AFNldEVu
+ZE9mUm93c2V0AFNwbGl0AGdldF9EZWZhdWx0AERpYWxvZ1Jlc3VsdABNaWNyb3NvZnQuWHJtLlNk
+ay5DbGllbnQAVXNlckNvbXBvbmVudABQYXJlbnRDb21wb25lbnQAU2NyaXB0Q29tcG9uZW50AGdl
+dF9DdXJyZW50AGN1cnJlbnQAZ2V0X0NvdW50AHNldF9JbnZlc3RtZW50QW1vdW50AE1pY3Jvc29m
+dC5TcWxTZXJ2ZXIuVHhTY3JpcHQAQ29udmVydABMYXN0AFdob0FtSVJlcXVlc3QAT3JnYW5pemF0
+aW9uUmVxdWVzdABFbnRpdGllc05hbWVMaXN0AEVudGl0eUF0dHJpYnV0ZXNMaXN0AGxpc3QATWlj
+cm9zb2Z0LlNxbFNlcnZlci5QaXBlbGluZUhvc3QAUHJpbWVPdXRwdXQATW92ZU5leHQAR2V0VmFs
+dWVXaXRoQ29udGV4dABTY3JpcHRDb21wb25lbnRFdmFsQ29udGV4dABnZXRfRXZhbHVhdG9yQ29u
+dGV4dABBZGRSb3cAU2hvdwBNZXNzYWdlQm94AFRvQ2hhckFycmF5AE1vbmV5AGdldF9Bc3NlbWJs
+eQBzZXRfUHJvZHVjdE1haW5GYW1pbHkATWljcm9zb2Z0LlhybS5TZGsuUXVlcnkAc2V0X0luZHVz
+dHJpYWxDaXR5AG9wX0VxdWFsaXR5AG9wX0luZXF1YWxpdHkAU3lzdGVtLlNlcnZpY2VNb2RlbC5T
+ZWN1cml0eQBHZXRQcmV2aW91c0VudGl0eQBFbXB0eQBNaWNyb3NvZnQuQ3JtLlNkay5Qcm94eQBP
+cmdhbml6YXRpb25TZXJ2aWNlUHJveHkAAAMsAAABAE1DAG8AbgBuAGUAYwB0AGkAbwBuACAARQBz
+AHQAYQBiAGwAaQBzAGgAZQBkACAAUwB1AGMAYwBlAHMAcwBmAHUAbABsAHkALgAuAC4AAEdGAGEA
+aQBsAGUAZAAgAHQAbwAgAEUAcwB0AGEAYgBsAGkAcwBoAGUAZAAgAEMAbwBuAG4AZQBjAHQAaQBv
+AG4AIQAhACEAACdFAHgAYwBlAHAAdABpAG8AbgAgAGMAYQB1AGcAaAB0ACAALQAgAAEhbABkAHYA
+XwBlAGQAaQB0AGMAbwBuAHQAcgBhAGMAdAAAEWwAZAB2AF8AbgBhAG0AZQAAJWwAZAB2AF8AYwBv
+AG4AdAByAGEAYwB0AG4AdQBtAGIAZQByAAANbABkAHYAXwBjAHIAACVsAGQAdgBfAGkAbgBkAHUA
+cwB0AHIAaQBhAGwAYwBpAHQAeQAAI2wAZAB2AF8AcgBlAHEAdQBlAHMAdABzAHQAYQB0AHUAcwAA
+H2wAZAB2AF8AcgBlAHEAdQBlAHMAdAB0AHkAcABlAAAtbABkAHYAXwBjAG8AbgB0AHIAYQBjAHQA
+cwB1AGIAbQBpAHMAcwBpAG8AbgAAE2MAcgBlAGEAdABlAGQAbwBuAAAZbABkAHYAXwBjAG8AbgB0
+AHIAYQBjAHQAACtsAGQAdgBfAHAAcgBvAGQAdQBjAHQAbQBhAGkAbgBmAGEAbQBpAGwAeQAAK2wA
+ZAB2AF8AcgBlAGoAZQBjAHQAaQBvAG4AcgBlAGEAcwBvAG4AaQBkAAAjbABkAHYAXwB0AG8AdABh
+AGwAbQBhAG4AcABvAHcAZQByAAAjbABkAHYAXwBpAHMAcABhAHkAbQBlAG4AdABkAG8AbgBlAAAf
+bABkAHYAXwBpAHMAcwB1AGIAbQBpAHQAdABlAGQAAC1sAGQAdgBfAHQAbwB0AGEAbAByAGUAcQB1
+AGUAcwB0AGUAZABhAHIAZQBhAAApbABkAHYAXwBpAG4AdgBlAHMAdABtAGUAbgB0AGEAbQBvAHUA
+bgB0AACAm0kAcwBOAHUAbABsACAAcAByAG8AcABlAHIAdAB5ACAAYwBhAG4AbgBvAHQAIABiAGUA
+IABzAGUAdAAgAHQAbwAgAEYAYQBsAHMAZQAuACAAQQBzAHMAaQBnAG4AIABhACAAdgBhAGwAdQBl
+ACAAdABvACAAdABoAGUAIABjAG8AbAB1AG0AbgAgAGkAbgBzAHQAZQBhAGQALgAAEUMAbwBuAHQA
+cgBhAGMAdAAAJ0UAZABpAHQAQwBvAG4AdAByAGEAYwB0AFIAZQBxAHUAZQBzAHQAACVDAG8AbgB0
+AHIAYQBjAHQAUwB1AGIAbQBpAHMAcwBpAG8AbgAAD0gAZQBhAGQAZQByAHMAACVFAG4AdABpAHQA
+aQBlAHMAXwBGAGkAbABlAF8AQwBvAG4AbgAADW8AcgBnAFUAUgBMAAARcABhAHMAcwB3AG8AcgBk
+AAARdQBzAGUAcgBOAGEAbQBlAABxUwBDAF8AOAA4ADkAMgBiADcAOAA2ADYAMgAwADUANABmAGMA
+MABiADkAZQA4AGMAMAA4ADYAMAA4ADMAYwA1ADAAYwBhAC4AUAByAG8AcABlAHIAdABpAGUAcwAu
+AFIAZQBzAG8AdQByAGMAZQBzAAAAABExIaDPKuxKtJvgz9Wxy2UABCABAQgDIAABBSABARERBCAB
+AQ4GIAEBEYCRBAcBEkkEIAEcHAgHBA4dDh0DDgQgAB0DAyAADgYgAR0OHQMFFRI9AQ4FAAICDg4F
+IAECEwAFIAEBEwADIAAICxABAR4AFRJNAR4AAwoBDgwHAxUSMAEeAB4AHgAGFRIwAR4AAwYTAAgV
+EoCpAh4AAgUgAgEcGBcQAQIVEk0BHgAVEk0BHgAVEoCpAh4AAgQKAR4AAh4ABwcDDhJRElUFIAAS
+gK0GAAEBEYC1DSAEARKAuRKAuRJRElEIIAESgMUSgMkFIAARgNEEBhGA0QkAAgIRgNERgNEGAAER
+gNkOBQACDg4OFgcIElkVEV0BDg4VEmEBEmUSZQ4SZQgIIAAVEV0BEwAFFRFdAQ4EIAATAAUgABKA
+3QUgAQEdDgMgAAIIIAESgOUSgOkJIAAVEoDtARJlBxUSgPEBEmUIIAAVEmEBEwAGFRJhARJlBSAA
+EoD1BxUSgPkCDhwGMAEBHgAOBQoBEoD9BSAAEoEBBxUSgPkCDg4GIAETARMABQoBEoEJAwoBAgMK
+AQgFCgESgREEIAARfQYAARF9EX0JIAMBEnEdCBJ1BSACAQgcAwcBCAYAAggSdQ4FIAEdCAgFIAAS
+gSEFIAASgSUGIAESgSkOBCAAEkkFIAASgS0GIAESgTEcBQAAEoE1BiABHBKBOQgAARKBPRGBQQUg
+ABKBRQcgAgEOEoFFBhUSMAETAAITAAQgAQIcCLd6XFYZNOCJCImEXc2AgMyRCDG/OFatNk41AwYS
+OQIGDgYGFRI9AQ4DBhJBAwYSIAMGEiQDBhIMAwYSEAMGEhQDBhIYBAYSgIEEBhKAiQQGEoCNAwYS
+LAQgAQEcDRABAh4AFRJNAR4AHgAEIAASQQsgAwESQQ4VEj0BDgQgAQECBSABARF5BSABARF9CyAE
+AQgdCB0ScRJ1BiABARKAgQUAABKAiQUAABKAjQYAAQESgI0EAAASLAMAAAEDKAAOAygAAgQoABF5
+BCgAEX0DKAAIBCgAEkkFCAASgIkFCAASgI0ECAASLAgBAAgAAAAAAB4BAAEAVAIWV3JhcE5vbkV4
+Y2VwdGlvblRocm93cwEIAQACAAAAAAAoAQAjU0NfODg5MmI3ODY2MjA1NGZjMGI5ZThjMDg2MDgz
+YzUwY2EAAAUBAAAAABYBABFDb3B5cmlnaHQgQCAgMjAyMQAASQEAGi5ORVRGcmFtZXdvcmssVmVy
+c2lvbj12NC43AQBUDhRGcmFtZXdvcmtEaXNwbGF5TmFtZRIuTkVUIEZyYW1ld29yayA0LjcEAQAA
+AAAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJlc291cmNlcy5SZXNvdXJjZVJlYWRlciwgbXNj
+b3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1i
+NzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJjZXMuUnVudGltZVJlc291cmNlU2V0AgAAAAAA
+AAAAAAAAUEFEUEFEULQAAACsWQAAAAAAAAAAAADGWQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+uFkAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2NvcmVlLmRsbAAAAAAA/yUAIAAQAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAYAACAAAAAAAAA
+AAAAAAAAAAABAAEAAAAwAACAAAAAAAAAAAAAAAAAAAABAAAAAABIAAAAWGAAAOwDAAAAAAAAAAAA
+AOwDNAAAAFYAUwBfAFYARQBSAFMASQBPAE4AXwBJAE4ARgBPAAAAAAC9BO/+AAABAAAAAQAAAAAA
+AAABAAAAAAA/AAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAARAAAAAEAVgBhAHIARgBpAGwAZQBJ
+AG4AZgBvAAAAAAAkAAQAAABUAHIAYQBuAHMAbABhAHQAaQBvAG4AAAAAAAAAsARMAwAAAQBTAHQA
+cgBpAG4AZwBGAGkAbABlAEkAbgBmAG8AAAAoAwAAAQAwADAAMAAwADAANABiADAAAAAaAAEAAQBD
+AG8AbQBtAGUAbgB0AHMAAAAAAAAAIgABAAEAQwBvAG0AcABhAG4AeQBOAGEAbQBlAAAAAAAAAAAA
+cAAkAAEARgBpAGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AAAAAAFMAQwBfADgAOAA5ADIAYgA3
+ADgANgA2ADIAMAA1ADQAZgBjADAAYgA5AGUAOABjADAAOAA2ADAAOAAzAGMANQAwAGMAYQAAADAA
+CAABAEYAaQBsAGUAVgBlAHIAcwBpAG8AbgAAAAAAMQAuADAALgAwAC4AMAAAAHAAKAABAEkAbgB0
+AGUAcgBuAGEAbABOAGEAbQBlAAAAUwBDAF8AOAA4ADkAMgBiADcAOAA2ADYAMgAwADUANABmAGMA
+MABiADkAZQA4AGMAMAA4ADYAMAA4ADMAYwA1ADAAYwBhAC4AZABsAGwAAABIABIAAQBMAGUAZwBh
+AGwAQwBvAHAAeQByAGkAZwBoAHQAAABDAG8AcAB5AHIAaQBnAGgAdAAgAEAAIAAgADIAMAAyADEA
+AAAqAAEAAQBMAGUAZwBhAGwAVAByAGEAZABlAG0AYQByAGsAcwAAAAAAAAAAAHgAKAABAE8AcgBp
+AGcAaQBuAGEAbABGAGkAbABlAG4AYQBtAGUAAABTAEMAXwA4ADgAOQAyAGIANwA4ADYANgAyADAA
+NQA0AGYAYwAwAGIAOQBlADgAYwAwADgANgAwADgAMwBjADUAMABjAGEALgBkAGwAbAAAAGgAJAAB
+AFAAcgBvAGQAdQBjAHQATgBhAG0AZQAAAAAAUwBDAF8AOAA4ADkAMgBiADcAOAA2ADYAMgAwADUA
+NABmAGMAMABiADkAZQA4AGMAMAA4ADYAMAA4ADMAYwA1ADAAYwBhAAAANAAIAAEAUAByAG8AZAB1
+AGMAdABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgAwAC4AMAAAADgACAABAEEAcwBzAGUAbQBiAGwA
+eQAgAFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADAALgAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAwAAADYOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_8892b78662054fc0b9e8c086083c50ca</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg">User::orgURL,User::password,User::userName</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">53</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export CRM Data\Get Data from CRM.Connections[Entities_File_Conn]"
+                  connectionManagerID="Package.ConnectionManagers[EntitiesConnection]"
+                  connectionManagerRefId="Package.ConnectionManagers[EntitiesConnection]"
+                  name="Entities_File_Conn" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract]"
+                  hasSideEffects="true"
+                  name="Contract">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[title]"
+                      name="title" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[createdon]"
+                      dataType="date"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[createdon]"
+                      name="createdon" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[modifiedon]"
+                      dataType="date"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Contract].Columns[modifiedon]"
+                      name="modifiedon" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest]"
+                  hasSideEffects="true"
+                  name="EditContractRequest">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestNumber]"
+                      name="RequestNumber" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[ContractNumber]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[ContractNumber]"
+                      name="ContractNumber" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[CR]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[CR]"
+                      name="CR" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[IndustrialCity]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[IndustrialCity]"
+                      name="IndustrialCity" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestStatus]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestStatus]"
+                      name="RequestStatus" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestType]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest].Columns[RequestType]"
+                      name="RequestType" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission]"
+                  hasSideEffects="true"
+                  name="ContractSubmission">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestNumber]"
+                      name="RequestNumber" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[Contract]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[Contract]"
+                      name="Contract" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[CreatedOn]"
+                      dataType="date"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[CreatedOn]"
+                      name="CreatedOn" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IndustrialCity]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IndustrialCity]"
+                      name="IndustrialCity" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[InvestmentAmount]"
+                      dataType="cy"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[InvestmentAmount]"
+                      name="InvestmentAmount" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsPaymentDone]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsPaymentDone]"
+                      name="IsPaymentDone" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsSubmitted]"
+                      dataType="bool"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[IsSubmitted]"
+                      name="IsSubmitted" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[ProductMainFamily]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[ProductMainFamily]"
+                      name="ProductMainFamily" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RejectionReason]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RejectionReason]"
+                      name="RejectionReason" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestStatus]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[RequestStatus]"
+                      name="RequestStatus" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalManpower]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalManpower]"
+                      name="TotalManpower" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalRequestedArea]"
+                      dataType="i4"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission].Columns[TotalRequestedArea]"
+                      name="TotalRequestedArea" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers]"
+                  hasSideEffects="true"
+                  name="Headers">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityFieldType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityFieldType]"
+                      name="EntityFieldType" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityField]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityField]"
+                      name="EntityField" />
+                    <outputColumn
+                      refId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1500"
+                      lineageId="Package\Export CRM Data\Get Data from CRM.Outputs[Headers].Columns[EntityName]"
+                      name="EntityName" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Export CRM Data.Paths[ContractSubmission]"
+              endId="Package\Export CRM Data\Check whether the contract submission exists or not.Inputs[Lookup Input]"
+              name="ContractSubmission"
+              startId="Package\Export CRM Data\Get Data from CRM.Outputs[ContractSubmission]" />
+            <path
+              refId="Package\Export CRM Data.Paths[EditContractRequest]"
+              endId="Package\Export CRM Data\Check whether the edit contract request exists or not.Inputs[Lookup Input]"
+              name="EditContractRequest"
+              startId="Package\Export CRM Data\Get Data from CRM.Outputs[EditContractRequest]" />
+            <path
+              refId="Package\Export CRM Data.Paths[Lookup No Match Output]"
+              endId="Package\Export CRM Data\Edit Contract Request Table.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Export CRM Data\Check whether the edit contract request exists or not.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Export CRM Data.Paths[Lookup No Match Output1]"
+              endId="Package\Export CRM Data\Contract Submission Table.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Export CRM Data\Check whether the contract submission exists or not.Outputs[Lookup No Match Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="159.5,42"
+          Id="Package\Export CRM Data"
+          TopLeft="283,102" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Export CRM Data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="210.5,42"
+          Id="Package\Export CRM Data\Edit Contract Request Table"
+          TopLeft="97.5,240" />
+        <NodeLayout
+          Size="170.5,42"
+          Id="Package\Export CRM Data\Get Data from CRM"
+          TopLeft="280.5,39" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Export CRM Data\Contract Submission Table"
+          TopLeft="481.5,237.5" />
+        <NodeLayout
+          Size="325.5,42"
+          Id="Package\Export CRM Data\Check whether the contract submission exists or not"
+          TopLeft="423.5,145" />
+        <NodeLayout
+          Size="329.5,42"
+          Id="Package\Export CRM Data\Check whether the edit contract request exists or not"
+          TopLeft="40.5,147" />
+        <EdgeLayout
+          Id="Package\Export CRM Data.Paths[EditContractRequest]"
+          TopLeft="338.666666666667,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-133.416666666667,66"
+              Start="0,0"
+              End="-133.416666666667,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.7681580476467" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.7681580476467"
+                    Point2="0,26.7681580476467"
+                    Point3="-4,26.7681580476467" />
+                  <mssgle:LineSegment
+                    End="-129.416666666667,26.7681580476467" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-129.416666666667,26.7681580476467"
+                    Point2="-133.416666666667,26.7681580476467"
+                    Point3="-133.416666666667,30.7681580476467" />
+                  <mssgle:LineSegment
+                    End="-133.416666666667,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-112.119720052083,31.7681580476467,90.8227734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Export CRM Data.Paths[ContractSubmission]"
+          TopLeft="392.833333333333,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="193.416666666667,64"
+              Start="0,0"
+              End="193.416666666667,56.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.9570017431726" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.9570017431726"
+                    Point2="0,25.9570017431726"
+                    Point3="4,25.9570017431726" />
+                  <mssgle:LineSegment
+                    End="189.416666666667,25.9570017431726" />
+                  <mssgle:CubicBezierSegment
+                    Point1="189.416666666667,25.9570017431726"
+                    Point2="193.416666666667,25.9570017431726"
+                    Point3="193.416666666667,29.9570017431726" />
+                  <mssgle:LineSegment
+                    End="193.416666666667,56.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="52.8088802083333,30.9570017431726,87.79890625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Export CRM Data.Paths[Lookup No Match Output]"
+          TopLeft="204,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.9453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Export CRM Data.Paths[Lookup No Match Output1]"
+          TopLeft="584.875,187">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.5"
+              Start="0,0"
+              End="0,43">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.6953125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export CRM Data\Check whether the edit contract request exists or not">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[EditContractRequest]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export CRM Data\Check whether the contract submission exists or not">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export CRM Data\Contract Submission Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export CRM Data\Edit Contract Request Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
