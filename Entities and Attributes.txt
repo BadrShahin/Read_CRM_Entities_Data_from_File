@@ -17,4 +17,5 @@ ldv_contractsubmission,ldv_productmainfamily,Lookup
 ldv_contractsubmission,ldv_rejectionreasonid,Lookup
 ldv_contractsubmission,ldv_totalmanpower,String
 ldv_contractsubmission,ldv_totalrequestedarea,Integer
-
+incident,ticketnumber,String
+incident,title,String
